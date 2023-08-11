@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body style="display: flex;align-items: center;">
+    <canvas id="2D" style="display:block"></canvas>
+    <canvas id="3D" style="display:none"></canvas>
+    <canvas id="Bresenham" style="display:none"></canvas>
+</body>
+<script src='Constructeurs.js'></script>
+<script src='Bresenham.js'></script>
+<script src='Render.js'></script>
+<script src='Move.js'></script>
+<script src='Draw.js'></script>
+<script>
+    addEventListener('keydown', function(event){move(event.key);});
+    const ca = document.querySelector('canvas#Bresenham');
+    const ctx_ca = ca.getContext('2d');
+    ca.width = 50;
+    ca.height = 50;
+    for (let i = 0; i < 50; i++) {
+        logic_bresenham(i, 25, i, -25).forEach((duo,p) => {
+            ctx_ca.beginPath();
+            const color = Math.abs(duo[1]*5);
+            ctx_ca.strokeStyle = `rgb(${color},${color},${color})`;
+            ctx_ca.rect(duo[0], ca.height/2 + duo[1], 2, 2);
+            ctx_ca.stroke();
+        });
+    };
+    
+    [
+        24,
+        24,
+        24,
+        23,
+        23,
+        23,
+        22,
+        22,
+        22,
+        21,
+        21,
+        21,
+        15,
+        15,
+        15,
+        14,
+        14,
+        14,
+        13,
+        13,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        17,
+        17,
+        17,
+        18,
+        18,
+        18,
+        19,
+        19,
+        19,
+    ].forEach((element, p) => {
+        logic_bresenham(p, element, p, -element).forEach(duo => {
+            ctx_ca.beginPath();
+            ctx_ca.strokeStyle = "#000";
+            ctx_ca.rect(duo[0], ca.height/2 + duo[1], 2, 2);
+            ctx_ca.stroke();
+        });
+    });
+</script>
+</html>
